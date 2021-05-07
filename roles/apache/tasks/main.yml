@@ -1,0 +1,6 @@
+---
+# tasks file for apache
+
+- name: Install apache2 package
+  apt:
+    name: apache2

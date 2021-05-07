@@ -1,0 +1,23 @@
+---
+# tasks file for wordpress
+
+- name: Download wordpress
+  get_url: url=http://wordpress.org/wordpress-5.7.1.tar.gz dest=/srv/wordpress-5.7.1.tar.gz
+
+- name: Extract archive
+  unarchive:
+    src: /srv/wordpress-5.7.1.tar.gz
+    dest: /srv
+
+- name: Add group "wordpress"
+  group: name=wordpress
+
+- name: Add user "wordpress"
+  user: name=wordpress group=wordpress home=/srv
+
+- name: Create wordpress database
+  mysql_db: name=wordpress state=present
+
+- name: Create wordpress database user
+  mysql_user: name=wordpress password=wordpress priv=wordpress.*:ALL host='localhost' state=present
+

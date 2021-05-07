@@ -1,0 +1,38 @@
+---
+#- name: Remove MySQL
+#  apt:
+#    name: mysql*
+#    state: absent
+#    update_cache: yes
+
+#- name: Add xenial main repository
+#  lineinfile:
+#    dest: /etc/apt/sources.list
+#    line: deb http://kr.archive.ubuntu.com/ubuntu xenial main
+
+#- name: Add xenial main repository
+#  apt_repository:
+#    repo: deb http://kr.archive.ubuntu.com/ubuntu xenial main
+#    state: present
+#    update_cache: yes
+
+- name: Install MySQL Python Libraries
+  apt:
+    name:
+      - python-mysqldb
+    state: present
+
+- name: Install MySQL 5.6
+  apt:
+    name:
+      - mysql-server
+    state: present
+
+- name: Create MySQL configuration file
+  template: src=my.cnf.j2 dest=/etc/my.cnf
+  notify:
+  - restart mysql
+
+#- name: Make boot persistent
+#  service: name=mysqld state=started enabled=yes
+

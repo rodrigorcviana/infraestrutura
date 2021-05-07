@@ -1,0 +1,14 @@
+---
+- name: Install php-fpm and deps
+  package: name={{ item }} state=present
+  with_items:
+    - php
+    - php-fpm
+    - php-enchant
+    - php-mbstring
+    - php-mysql
+    - php-xml
+
+- name: Copy php-fpm configuration
+  template: src=wordpress.conf dest=/etc/php-fpm.d/
+  notify: restart php-fpm
